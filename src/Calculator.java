@@ -69,19 +69,33 @@ public class Calculator {
             }
 
             // 연산자의 종류에 따른 다른 계산 방식을 지원
+            boolean isDivideByZero = false;
             double result = switch (operator) {
                 case "+" -> num1 + num2;
                 case "-" -> num1 - num2;
                 case "*" -> num1 * num2;
-                case "/" -> num1 / num2;
+                case "/" -> {
+                    if (num2 == 0) {
+                        System.out.println("0으로 나눌 수 없습니다");
+                        isDivideByZero = true;
+                        yield 0.0;
+                    } else {
+                        yield num1 / num2;
+                    }
+                }
                 case "%" -> num1 % num2;
                 case "^" -> Math.pow(num1, num2);
                 case "sqrt" -> Math.pow(num1, 1 / num2);
                 default -> 0;
             };
 
-            System.out.println("결과: " + result);
-            sb.append(num1).append(' ').append(operator).append(' ').append(num2).append(" = ").append(result).append("\n");
+            if (!isDivideByZero){
+                System.out.println("결과: " + result);
+                sb.append(num1).append(' ').append(operator).append(' ').append(num2).append(" = ").append(result).append("\n");
+            } else {
+                System.out.println("결과: " + "0으로 나눌 수 없습니다");
+                sb.append(num1).append(' ').append(operator).append(' ').append(num2).append(" = ").append("0으로 나눌 수 없습니다").append("\n");
+            }
 
             // 계산을 계속할것인지의 여부
             while (true){
