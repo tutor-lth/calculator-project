@@ -1,5 +1,3 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,9 +5,73 @@ public class Calculator {
     static StringBuilder sb = new StringBuilder();
 
     public static void calculate(){
-        Deque<String> deque = new ArrayDeque<>();
+        Scanner scanner = new Scanner(System.in);
 
+        double num1;
 
+        while (true){
+            System.out.print("첫 번째 숫자: ");
+
+            try {
+                num1 = scanner.nextDouble();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("숫자를 입력해주세요.");
+                scanner.nextLine();
+            }
+        }
+
+        String operator;
+        String[] type = new String[] {"+", "-", "*", "/", "%", "^", "sqrt"};
+
+        while (true){
+            System.out.print("연산자: ");
+
+            operator = scanner.next();
+            scanner.nextLine();
+
+            boolean flag = false;
+
+            for (String s : type){
+                if (operator.equals(s)){
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag) break;
+            else System.out.println("지원하지 않는 연산자입니다.");
+        }
+
+        double num2;
+
+        while (true){
+            System.out.print("두 번째 숫자: ");
+
+            try {
+                num2 = scanner.nextDouble();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("숫자를 입력해주세요.");
+                scanner.nextLine();
+            }
+        }
+
+        double result = switch (operator) {
+            case "+" -> num1 + num2;
+            case "-" -> num1 - num2;
+            case "*" -> num1 * num2;
+            case "/" -> num1 / num2;
+            case "%" -> num1 % num2;
+            case "^" -> Math.pow(num1, num2);
+            case "sqrt" -> Math.pow(num1, 1 / num2);
+            default -> 0;
+        };
+
+        System.out.println("결과: " + result);
+        sb.append(num1).append(' ').append(num2).append(" = ").append(result).append("\n");
     }
 
     public static void showLog(){
