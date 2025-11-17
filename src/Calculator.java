@@ -7,71 +7,89 @@ public class Calculator {
     public static void calculate(){
         Scanner scanner = new Scanner(System.in);
 
-        double num1;
+        jump: while (true){
+            double num1;
 
-        while (true){
-            System.out.print("첫 번째 숫자: ");
+            while (true){
+                System.out.print("첫 번째 숫자를 입력해주세요: ");
 
-            try {
-                num1 = scanner.nextDouble();
-                scanner.nextLine();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("숫자를 입력해주세요.");
-                scanner.nextLine();
-            }
-        }
-
-        String operator;
-        String[] type = new String[] {"+", "-", "*", "/", "%", "^", "sqrt"};
-
-        while (true){
-            System.out.print("연산자: ");
-
-            operator = scanner.next();
-            scanner.nextLine();
-
-            boolean flag = false;
-
-            for (String s : type){
-                if (operator.equals(s)){
-                    flag = true;
+                try {
+                    num1 = scanner.nextDouble();
+                    scanner.nextLine();
                     break;
+                } catch (InputMismatchException e) {
+                    System.out.println("숫자를 입력해주세요.");
+                    scanner.nextLine();
                 }
             }
 
-            if (flag) break;
-            else System.out.println("지원하지 않는 연산자입니다.");
-        }
+            String operator;
+            String[] type = new String[] {"+", "-", "*", "/", "%", "^", "sqrt"};
 
-        double num2;
+            while (true){
+                System.out.print("연산자를 입력하세요 (+, -, *, /, %, ^, sqrt): ");
 
-        while (true){
-            System.out.print("두 번째 숫자: ");
-
-            try {
-                num2 = scanner.nextDouble();
+                operator = scanner.next();
                 scanner.nextLine();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("숫자를 입력해주세요.");
+
+                boolean flag = false;
+
+                for (String s : type){
+                    if (operator.equals(s)){
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (flag) break;
+                else System.out.println("지원하지 않는 연산자입니다.");
+            }
+
+            double num2;
+
+            while (true){
+                System.out.print("두 번째 숫자를 입력해주세요: ");
+
+                try {
+                    num2 = scanner.nextDouble();
+                    scanner.nextLine();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("숫자를 입력해주세요.");
+                    scanner.nextLine();
+                }
+            }
+
+            double result = switch (operator) {
+                case "+" -> num1 + num2;
+                case "-" -> num1 - num2;
+                case "*" -> num1 * num2;
+                case "/" -> num1 / num2;
+                case "%" -> num1 % num2;
+                case "^" -> Math.pow(num1, num2);
+                case "sqrt" -> Math.pow(num1, 1 / num2);
+                default -> 0;
+            };
+
+            System.out.println("결과: " + result);
+            sb.append(num1).append(' ').append(operator).append(' ').append(num2).append(" = ").append(result).append("\n");
+
+            while (true){
+                System.out.print("계속 계산하시겠습니까? (y/n): ");
+                String s = scanner.next();
                 scanner.nextLine();
+
+                if (s.equals("y") || s.equals("n")){
+                    if (s.equals("n")){
+                        break jump;
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.out.println("올바른 명령을 입력해주세요.");
+                }
             }
         }
-
-        double result = switch (operator) {
-            case "+" -> num1 + num2;
-            case "-" -> num1 - num2;
-            case "*" -> num1 * num2;
-            case "/" -> num1 / num2;
-            case "%" -> num1 % num2;
-            case "^" -> Math.pow(num1, num2);
-            case "sqrt" -> Math.pow(num1, 1 / num2);
-            default -> 0;
-        };
-
-        System.out.println("결과: " + result);
-        sb.append(num1).append(' ').append(num2).append(" = ").append(result).append("\n");
     }
 
     public static void showLog(){
