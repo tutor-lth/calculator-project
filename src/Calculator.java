@@ -93,11 +93,14 @@ public class Calculator {
     }
 
     public static void showLog(){
-
+        System.out.println("=== 계산이력 ===");
+        System.out.print(sb);
+        System.out.println("=== 계산이력 ===");
     }
 
     public static void deleteLog(){
-
+        sb.setLength(0);
+        System.out.println("계산이력을 초기화했습니다.");
     }
 
     public static void main(String[] args) {
